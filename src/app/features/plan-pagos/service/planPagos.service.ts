@@ -14,5 +14,9 @@ export class AccountService {
 
   getAccountById(id: number): Observable<ResponseData> {
     return this.http.get<ResponseData>(`${this.baseUrl}/${id}`);
+
   }
+  getTotalInteresMoratorio(accountId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/accounts/${accountId}/total-interes-moratorio`);
+    }
 }

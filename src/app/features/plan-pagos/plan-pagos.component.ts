@@ -17,6 +17,7 @@ export class PlanPagosComponent implements OnInit {
   datosEntrada: DatosEntrada | undefined;
   datosSalidaList: DatosSalida[] = [];
   accountId : number = 0;
+  totalInteresMoratorio: number = 0;
 
   constructor(
     private accountService: AccountService,
@@ -26,6 +27,7 @@ export class PlanPagosComponent implements OnInit {
   ngOnInit(): void {
     this.accountId = this.sessionStorageService.getItem('accountId');
     this.getAccount(this.accountId);
+    this.getTotalInteresMoratorio(this.accountId);
   }
 
   getAccount(id: number): void {
@@ -35,6 +37,16 @@ export class PlanPagosComponent implements OnInit {
         this.datosSalidaList = data.datosSalidaList;
         console.log(this.datosEntrada);
         console.log(this.datosSalidaList);
+      },
+      (error) => {
+        console.error('There was an error!', error);
+      }
+    );
+  }
+  getTotalInteresMoratorio(id: number): void {
+    this.accountService.getTotalInteresMoratorio(id).subscribe(
+      (total: number) => {
+        this.totalInteresMoratorio = total;
       },
       (error) => {
         console.error('There was an error!', error);
